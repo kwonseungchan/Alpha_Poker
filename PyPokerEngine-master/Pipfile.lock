@@ -1,0 +1,29 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "3e0f3e6495b5f25efc28164793886069f85e33f17addda84aaecf903c97cb8fd"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.7"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "pypokerengine": {
+            "hashes": [
+                "sha256:6ddb11d0341c7267c83d7e2254427fde92e2e66d3eb9f7228499f58169dbcb9c",
+                "sha256:97485feea197ac630b878a140f51da33a362c823930a07254dafb9d394e10633"
+            ],
+            "index": "pypi",
+            "version": "==1.0.1"
+        }
+    },
+    "develop": {}
+}

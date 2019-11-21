@@ -1,10 +1,11 @@
 from pypokerengine.players import BasePokerPlayer
 from pypokerengine.utils.card_utils import gen_cards, estimate_hole_card_win_rate
-import random
+import random as rand
 
 NB_SIMULATION = 1000
 
 class HonestPlayer(BasePokerPlayer):
+
 
     def declare_action(self, valid_actions, hole_card, round_state):
         community_card = round_state['community_card']
@@ -14,47 +15,139 @@ class HonestPlayer(BasePokerPlayer):
                 hole_card=gen_cards(hole_card),
                 community_card=gen_cards(community_card)
                 )
+        print("###############################")
+        print("###### 예상승률 : ",win_rate, "######")
+        print("###############################")
+        choice = self.__choice_action(valid_actions, win_rate)
+        action = choice["action"]
+        amount = choice["amount"]
+        
+        if action == "raise":
+            maxAmount = amount["max"]
+            minAmount = amount["min"]
+            i = rand.random()
 
-        print("승률 : ", win_rate)
-        i = random.random()
-        if win_rate >= 0.99: #승률 99% 이상일 때
-            #amount = max(amount["min"], amount["max"]) #올인
-            #action = valid_actions[2]['amount'] #레이즈
-            return valid_actions[2]['action'], valid_actions[2]['amount']['max']
-        elif win_rate >= 0.975: #승률 97.5% 이상일 때
-            #betAmount = ( 0.1 * amount["min"]+ 0.9 * max(amount["min"], amount["max"]) )
-            #action = valid_actions[2]['amount'] #레이즈
-            return valid_actions[2]['action'], valid_actions[2]['amount']['max']
-        elif win_rate >= 0.95: #승률 95% 이상일 때
-            #betAmount = ( 0.2 * amount["min"]+ 0.8 * max(amount["min"], amount["max"]) )
-            #action = valid_actions[2]['amount'] #레이즈
-            return valid_actions[2]['action'], valid_actions[2]['amount']['max']
-        elif win_rate >= 0.9: #승률 90% 이상일 때
-            #betAmount = ( 0.5 * amount["min"]+ 0.5 * max(amount["min"], amount["max"]) )
-            #action = valid_actions[2]['amount'] #레이즈
-            return valid_actions[2]['action'], valid_actions[2]['amount']['max']
-        elif win_rate >= 0.8: #승률 80% 이상일 때
-            #amount = ( 0.2 * amount["min"]+ 0.8 * max(amount["min"], amount["max"]) )
-            #action = valid_actions[2]['amount'] #레이즈
-            return valid_actions[2]['action'], valid_actions[2]['amount']['min']
-        elif win_rate >= 0.7: #승률 70% 이상일 때
-            #action = valid_actions[1] #콜
-            return valid_actions[1]['action'], valid_actions[1]['amount']
-        elif win_rate >= 0.6: #승률 60% 이상일 때
-            #action = valid_actions[1] #콜
-            return valid_actions[1]['action'], valid_actions[1]['amount']
-        elif win_rate >= 0.5: #승률 50% 이상일 때
-            #action = valid_actions[1] #콜
-            return valid_actions[1]['action'], valid_actions[1]['amount']
-        else: 
-            return valid_actions[0]['action'], valid_actions[0]['amount']
-            #if i >= 0.90: #10% 확률로 레이즈 블러핑
-                #action = valid_actions[2] #블러핑(레이즈)
-            #elif i >= 0.80: #20% 확률로 콜 블러핑
-                #action = valid_actions[1] #블러핑(콜)
-            #else: 
-                #action = valid_actions[0]  #폴드
-        #return action['action'], action['amount']
+            if win_rate < 0.8: # 70% ~ 80%
+                if i < 0.7: # 0% ~ 70%
+                    amount = amount["min"]
+                    print("7-80% 구간 정직")
+                elif i < 0.8: # 70% ~ 80%
+                    amount = int (maxAmount * 0.2 + minAmount * 0.8 )
+                    print("7-80% 구간 max 0.2 블러핑")
+                elif i < 0.9 : # 80% ~ 90%    
+                    amount = int (maxAmount * 0.4 + minAmount * 0.6 )
+                    print("7-80% 구간 max 0.4 블러핑")
+                elif i < 0.95 : # 90% ~ 95%
+                    amount = int (maxAmount * 0.6 + minAmount * 0.4 )
+                    print("7-80% 구간 max 0.6 블러핑")
+                elif i < 0.98 : # 95% ~ 98%
+                    amount = int (maxAmount * 0.8 + minAmount * 0.2 )
+                    print("7-80% 구간 max 0.8 블러핑")
+                else : # 98% ~ 100%
+                    amount = amount["max"]
+                    print("7-80% 구간 max 1.0 블러핑")
+
+            elif win_rate < 0.9: # 80% ~ 90%
+                if i < 0.7: # 0% ~ 70%
+                    amount = int (maxAmount * 0.2 + minAmount * 0.8 )
+                    print("8-90% 구간 정직")
+                elif i < 0.8: # 70% ~ 80%
+                    amount = amount["min"]
+                    print("8-90% 구간 max 0.0 블러핑")
+                elif i < 0.9 : # 80% ~ 90%    
+                    amount = int (maxAmount * 0.4 + minAmount * 0.6 )
+                    print("8-90% 구간 max 0.4 블러핑")
+                elif i < 0.95 : # 90% ~ 95%
+                    amount = int (maxAmount * 0.6 + minAmount * 0.4 )
+                    print("8-90% 구간 max 0.6 블러핑")
+                elif i < 0.98 : # 95% ~ 98%
+                    amount = int (maxAmount * 0.8 + minAmount * 0.2 )
+                    print("8-90% 구간 max 0.8 블러핑")
+                else : # 98% ~ 100%
+                    amount = amount["max"]
+                    print("8-90% 구간 max 1.0 블러핑")
+
+            elif win_rate < 0.95: # 90% ~ 95%
+                if i < 0.7: # 0% ~ 70%
+                    amount = int (maxAmount * 0.4 + minAmount * 0.6 )
+                    print("90-95% 구간 정직")
+                elif i < 0.8: # 70% ~ 80%
+                    amount = amount["min"]
+                    print("90-95% 구간 max 0.0 블러핑")
+                elif i < 0.9 : # 80% ~ 90%    
+                    amount = int (maxAmount * 0.2 + minAmount * 0.8 )
+                    print("90-95% 구간 max 0.2 블러핑")
+                elif i < 0.95 : # 90% ~ 95%
+                    amount = int (maxAmount * 0.6 + minAmount * 0.4 )
+                    print("90-95% 구간 max 0.6 블러핑")
+                elif i < 0.98 : # 95% ~ 98%
+                    amount = int (maxAmount * 0.8 + minAmount * 0.2 )
+                    print("90-95% 구간 max 0.8 블러핑")
+                else : # 98% ~ 100%
+                    amount = amount["max"]
+                    print("90-95% 구간 max 1.0 블러핑")
+
+            elif win_rate < 0.975: # 95% ~ 97.5%
+                if i < 0.7: # 0% ~ 70%
+                    amount = int (maxAmount * 0.6 + minAmount * 0.4 )
+                elif i < 0.8: # 70% ~ 80%
+                    amount = amount["min"]
+                elif i < 0.9 : # 80% ~ 90%    
+                    amount = int (maxAmount * 0.2 + minAmount * 0.8 )
+                elif i < 0.95 : # 90% ~ 95%
+                    amount = int (maxAmount * 0.4 + minAmount * 0.6 )
+                elif i < 0.98 : # 95% ~ 98%
+                    amount = int (maxAmount * 0.8 + minAmount * 0.2 )
+                else : # 98% ~ 100%
+                    amount = amount["max"]
+
+            elif win_rate < 0.99: # 97.5% ~ 99%
+                if i < 0.7: # 0% ~ 70%
+                    amount = int (maxAmount * 0.8 + minAmount * 0.2 )
+                elif i < 0.8: # 70% ~ 80%
+                    amount = amount["min"]
+                elif i < 0.9 : # 80% ~ 90%    
+                    amount = int (maxAmount * 0.2 + minAmount * 0.8 )
+                elif i < 0.95 : # 90% ~ 95%
+                    amount = int (maxAmount * 0.4 + minAmount * 0.6 )
+                elif i < 0.98 : # 95% ~ 98%
+                    amount = int (maxAmount * 0.6 + minAmount * 0.4 )
+                else : # 90% ~ 100%
+                    amount = amount["max"]
+
+            else: # 99% ~
+                if i < 0.7: # 0% ~ 70%
+                    amount = amount["max"]
+                elif i < 0.8: # 70% ~ 80%
+                    amount = amount["min"]
+                elif i < 0.9 : # 80% ~ 90%    
+                    amount = int (maxAmount * 0.2 + minAmount * 0.8 )
+                elif i < 0.95 : # 90% ~ 95%
+                    amount = int (maxAmount * 0.4 + minAmount * 0.6 )
+                elif i < 0.98 : # 95% ~ 98%
+                    amount = int (maxAmount * 0.6 + minAmount * 0.4 )
+                else : # 98% ~ 100%
+                    amount = int (maxAmount * 0.8 + minAmount * 0.2 )
+
+        return action, amount
+
+    def __choice_action(self, valid_actions, win_rate):
+        i = rand.random()
+        if win_rate <= 0.5:
+            if i < 0.7:
+                return valid_actions[0]
+            elif i < 0.9:
+                return valid_actions[1]
+            else:
+                return valid_actions[2]
+        elif win_rate <= 0.7:
+            if i < 0.7:
+                return valid_actions[1]
+            else:
+                return valid_actions[2]
+        else:
+            return valid_actions[2]
+
 
     def receive_game_start_message(self, game_info):
         self.nb_player = game_info['player_num']

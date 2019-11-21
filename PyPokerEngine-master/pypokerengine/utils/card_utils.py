@@ -5,6 +5,11 @@ from pypokerengine.engine.deck import Deck
 from pypokerengine.engine.hand_evaluator import HandEvaluator
 
 def gen_cards(cards_str):
+    print("AI의 패를 입력함. 첫 번째 situation에서는 0을, 두 번째 situation에서는 1을 쓰자.")
+    situation = int(input("situation : "))
+    if situation == 0:
+        cards_str[0] = input("cards_str : ")
+        cards_str[1] = input("cards_str : ")
     return [Card.from_str(s) for s in cards_str]
 
 def estimate_hole_card_win_rate(nb_simulation, nb_player, hole_card, community_card=None):
@@ -13,6 +18,7 @@ def estimate_hole_card_win_rate(nb_simulation, nb_player, hole_card, community_c
     return 1.0 * win_count / nb_simulation
 
 def gen_deck(exclude_cards=None):
+    print("card_utils.gen_deck")
     deck_ids = range(1, 53)
     if exclude_cards:
         assert isinstance(exclude_cards, list)
@@ -39,10 +45,12 @@ def _montecarlo_simulation(nb_player, hole_card, community_card):
     return 1 if my_score >= max(opponents_score) else 0
 
 def _fill_community_card(base_cards, used_card):
+    print("card_utils._fill_community_card")
     need_num = 5 - len(base_cards)
     return base_cards + _pick_unused_card(need_num, used_card)
 
 def _pick_unused_card(card_num, used_card):
+    print("card_utils._pick_unused_card")
     used = [card.to_id() for card in used_card]
     unused = [card_id for card_id in range(1, 53) if card_id not in used]
     choiced = random.sample(unused, card_num)

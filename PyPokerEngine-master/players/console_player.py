@@ -1,6 +1,7 @@
 import pypokerengine.utils.visualize_utils as U
 from pypokerengine.players import BasePokerPlayer
 #from players.emulator_player import EmulatorPlayer
+import tkinter as tk
 
 class ConsolePlayer(BasePokerPlayer):
 
@@ -39,6 +40,14 @@ class ConsolePlayer(BasePokerPlayer):
     return lambda msg: input(msg)
 
   def __receive_action_from_console(self, valid_actions):
+
+    root = tk.Tk()
+    label = tk.Label(root, width=30)
+    label.pack(padx=20, pady=20)
+    label.configure(text="폴드f 콜c 레이즈r")
+    root.after(10000, root.destroy)
+    root.mainloop()
+
     flg = self.input_receiver('Enter f(fold), c(call), r(raise).\n >> ')
     if flg in self.__gen_valid_flg(valid_actions):
       if flg == 'f':

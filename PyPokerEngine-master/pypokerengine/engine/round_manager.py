@@ -7,6 +7,7 @@ from pypokerengine.engine.poker_constants import PokerConstants as Const
 from pypokerengine.engine.action_checker import ActionChecker
 from pypokerengine.engine.game_evaluator import GameEvaluator
 from pypokerengine.engine.message_builder import MessageBuilder
+from pypokerengine.engine.card import Card
 
 class RoundManager:
 
@@ -66,7 +67,13 @@ class RoundManager:
   @classmethod
   def __deal_holecard(self, deck, players):
     for player in players:
-      player.add_holecard(deck.draw_cards(2))
+      holecard = []
+      for i in range(2):
+        str_card = input("str_card :")
+        createdCard = Card.from_str(str_card)
+        holecard.append(createdCard)
+      #player.add_holecard(deck.draw_cards(2))
+      player.add_holecard(holecard)
 
   @classmethod
   def __start_street(self, state):
@@ -94,18 +101,24 @@ class RoundManager:
 
   @classmethod
   def __flop(self, state):
-    for card in state["table"].deck.draw_cards(3):
-      state["table"].add_community_card(card)
+    for i in range(3):
+      str_card = input("str_card :")
+      createdCard = Card.from_str(str_card)
+      state["table"].add_community_card(createdCard)  
     return self.__forward_street(state)
 
   @classmethod
   def __turn(self, state):
-    state["table"].add_community_card(state["table"].deck.draw_card())
+    str_card = input("str_card :")
+    createdCard = Card.from_str(str_card)
+    state["table"].add_community_card(createdCard)
     return self.__forward_street(state)
 
   @classmethod
   def __river(self, state):
-    state["table"].add_community_card(state["table"].deck.draw_card())
+    str_card = input("str_card :")
+    createdCard = Card.from_str(str_card)
+    state["table"].add_community_card(createdCard)
     return self.__forward_street(state)
 
   @classmethod

@@ -1,5 +1,4 @@
 from functools import reduce
-
 from pypokerengine.engine.card import Card
 import random
 
@@ -12,6 +11,7 @@ class Deck:
 
   def draw_card(self):
     return self.deck.pop()
+    
 
   def draw_cards(self, num):
     return reduce(lambda acc, _: acc + [self.draw_card()], range(num), [])

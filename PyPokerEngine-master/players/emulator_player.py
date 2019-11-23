@@ -2,6 +2,10 @@ from pypokerengine.players import BasePokerPlayer
 from pypokerengine.api.emulator import Emulator
 from pypokerengine.utils.card_utils import gen_cards
 from pypokerengine.utils.game_state_utils import restore_game_state, attach_hole_card, attach_hole_card_from_deck
+from players.console_player import ConsolePlayer
+from players.honest_player import HonestPlayer
+from players.fish_player import FishPlayer
+
 
 NB_SIMULATION = 1000
 DEBUG_MODE = True
@@ -16,6 +20,7 @@ class EmulatorPlayer(BasePokerPlayer):
     # setup Emulator with passed game information
     def receive_game_start_message(self, game_info):
         self.my_model = MyModel()
+        self.set_opponents_model(HonestPlayer())
         nb_player = game_info['player_num']
         max_round = game_info['rule']['max_round']
         sb_amount = game_info['rule']['small_blind_amount']
@@ -73,6 +78,7 @@ class EmulatorPlayer(BasePokerPlayer):
     def receive_round_result_message(self, winners, hand_info, round_state):
         pass
 
+
 class MyModel(BasePokerPlayer):
 
     FOLD = 0
@@ -94,4 +100,3 @@ class MyModel(BasePokerPlayer):
             return valid_actions[2]['action'], valid_actions[2]['amount']['max']
         else:
             raise Exception("Invalid action [ %s ] is set" % self.action)
-

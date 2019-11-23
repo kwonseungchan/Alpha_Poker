@@ -42,13 +42,11 @@ def attach_hole_card(game_state, uuid, hole_card):
     if len(target)==0: raise Exception('The player whose uuid is "%s" is not found in passed game_state.' % uuid)
     if len(target)!=1: raise Exception('Multiple players have uuid "%s". So we cannot attach hole card.' % uuid)
     target[0].hole_card = hole_card
-    print("attach_hole_card : ", hole_card)
     return deepcopy
 
 def replace_community_card(game_state, community_card):
     deepcopy = deepcopy_game_state(game_state)
     deepcopy["table"]._community_card = community_card
-    print("replace_community_card : ", community_card)
     return deepcopy
 
 def deepcopy_game_state(game_state):

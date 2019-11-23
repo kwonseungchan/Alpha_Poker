@@ -6,18 +6,15 @@ NB_SIMULATION = 1000
 
 class HonestPlayer(BasePokerPlayer):
 
-
     def declare_action(self, valid_actions, hole_card, round_state):
         community_card = round_state['community_card']
         win_rate = estimate_hole_card_win_rate(
                 nb_simulation=NB_SIMULATION,
-                nb_player=self.nb_player,
+                #nb_player=self.nb_player,
+                nb_player=2,
                 hole_card=gen_cards(hole_card),
                 community_card=gen_cards(community_card)
                 )
-        print("###############################")
-        print("###### 예상승률 : ",win_rate, "######")
-        print("###############################")
         choice = self.__choice_action(valid_actions, win_rate)
         action = choice["action"]
         amount = choice["amount"]
@@ -30,62 +27,44 @@ class HonestPlayer(BasePokerPlayer):
             if win_rate < 0.8: # 70% ~ 80%
                 if i < 0.7: # 0% ~ 70%
                     amount = amount["min"]
-                    print("7-80% 구간 정직")
                 elif i < 0.8: # 70% ~ 80%
                     amount = int (maxAmount * 0.2 + minAmount * 0.8 )
-                    print("7-80% 구간 max 0.2 블러핑")
                 elif i < 0.9 : # 80% ~ 90%    
                     amount = int (maxAmount * 0.4 + minAmount * 0.6 )
-                    print("7-80% 구간 max 0.4 블러핑")
                 elif i < 0.95 : # 90% ~ 95%
                     amount = int (maxAmount * 0.6 + minAmount * 0.4 )
-                    print("7-80% 구간 max 0.6 블러핑")
                 elif i < 0.98 : # 95% ~ 98%
                     amount = int (maxAmount * 0.8 + minAmount * 0.2 )
-                    print("7-80% 구간 max 0.8 블러핑")
                 else : # 98% ~ 100%
                     amount = amount["max"]
-                    print("7-80% 구간 max 1.0 블러핑")
 
             elif win_rate < 0.9: # 80% ~ 90%
                 if i < 0.7: # 0% ~ 70%
                     amount = int (maxAmount * 0.2 + minAmount * 0.8 )
-                    print("8-90% 구간 정직")
                 elif i < 0.8: # 70% ~ 80%
                     amount = amount["min"]
-                    print("8-90% 구간 max 0.0 블러핑")
                 elif i < 0.9 : # 80% ~ 90%    
                     amount = int (maxAmount * 0.4 + minAmount * 0.6 )
-                    print("8-90% 구간 max 0.4 블러핑")
                 elif i < 0.95 : # 90% ~ 95%
                     amount = int (maxAmount * 0.6 + minAmount * 0.4 )
-                    print("8-90% 구간 max 0.6 블러핑")
                 elif i < 0.98 : # 95% ~ 98%
                     amount = int (maxAmount * 0.8 + minAmount * 0.2 )
-                    print("8-90% 구간 max 0.8 블러핑")
                 else : # 98% ~ 100%
                     amount = amount["max"]
-                    print("8-90% 구간 max 1.0 블러핑")
 
             elif win_rate < 0.95: # 90% ~ 95%
                 if i < 0.7: # 0% ~ 70%
                     amount = int (maxAmount * 0.4 + minAmount * 0.6 )
-                    print("90-95% 구간 정직")
                 elif i < 0.8: # 70% ~ 80%
                     amount = amount["min"]
-                    print("90-95% 구간 max 0.0 블러핑")
                 elif i < 0.9 : # 80% ~ 90%    
                     amount = int (maxAmount * 0.2 + minAmount * 0.8 )
-                    print("90-95% 구간 max 0.2 블러핑")
                 elif i < 0.95 : # 90% ~ 95%
                     amount = int (maxAmount * 0.6 + minAmount * 0.4 )
-                    print("90-95% 구간 max 0.6 블러핑")
                 elif i < 0.98 : # 95% ~ 98%
                     amount = int (maxAmount * 0.8 + minAmount * 0.2 )
-                    print("90-95% 구간 max 0.8 블러핑")
                 else : # 98% ~ 100%
                     amount = amount["max"]
-                    print("90-95% 구간 max 1.0 블러핑")
 
             elif win_rate < 0.975: # 95% ~ 97.5%
                 if i < 0.7: # 0% ~ 70%

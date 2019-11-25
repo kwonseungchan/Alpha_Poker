@@ -8,13 +8,21 @@ from pypokerengine.engine.action_checker import ActionChecker
 from pypokerengine.engine.game_evaluator import GameEvaluator
 from pypokerengine.engine.message_builder import MessageBuilder
 from pypokerengine.engine.card import Card
+from pypokerengine.engine.card_reader import cardReader
 from tkinter import*
 
 
 class RoundManager:
 
+  cardList = []
+
+  def __init__(self):
+    self.cardList = []
+
   @classmethod
   def start_new_round(self, round_count, small_blind_amount, ante_amount, table):
+    self.cardList = cardReader.returnCardList(cardReader)
+
     _state = self.__gen_initial_state(round_count, small_blind_amount, table)
     state = self.__deep_copy_state(_state)
     table = state["table"]
@@ -71,7 +79,9 @@ class RoundManager:
     for player in players:
       holecard = []
       for i in range(2):
-        str_card = input("str_card :")
+        #str_card = input("str_card :")
+        str_card = self.cardList[0][0]
+        del self.cardList[0]
         createdCard = Card.from_str(str_card)
         holecard.append(createdCard)
       #player.add_holecard(deck.draw_cards(2))
@@ -104,21 +114,27 @@ class RoundManager:
   @classmethod
   def __flop(self, state):
     for i in range(3):
-      str_card = input("str_card :")
+      #str_card = input("str_card :")
+      str_card = self.cardList[0][0]
+      del self.cardList[0]
       createdCard = Card.from_str(str_card)
       state["table"].add_community_card(createdCard)  
     return self.__forward_street(state)
 
   @classmethod
   def __turn(self, state):
-    str_card = input("str_card :")
+    #str_card = input("str_card :")
+    str_card = self.cardList[0][0]
+    del self.cardList[0]
     createdCard = Card.from_str(str_card)
     state["table"].add_community_card(createdCard)
     return self.__forward_street(state)
 
   @classmethod
   def __river(self, state):
-    str_card = input("str_card :")
+    #str_card = input("str_card :")
+    str_card = self.cardList[0][0]
+    del self.cardList[0]
     createdCard = Card.from_str(str_card)
     state["table"].add_community_card(createdCard)
     return self.__forward_street(state)

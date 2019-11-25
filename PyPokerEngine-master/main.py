@@ -4,7 +4,7 @@ from players.console_player import ConsolePlayer
 from players.random_player import RandomPlayer
 from players.honest_player  import HonestPlayer
 from players.emulator_player import EmulatorPlayer
-from tkinter import*
+
 
 config = setup_config(max_round=10, initial_stack=100, small_blind_amount=5)
 config.register_player(name="HonestPlayer", algorithm=HonestPlayer())

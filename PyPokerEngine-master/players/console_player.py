@@ -45,7 +45,7 @@ class ConsolePlayer(BasePokerPlayer):
     label = tk.Label(root, width=30)
     label.pack(padx=20, pady=20)
     label.configure(text="폴드f 콜c 레이즈r")
-    root.after(10000, root.destroy)
+    root.after(3000, root.destroy)
     root.mainloop()
 
     flg = self.input_receiver('Enter f(fold), c(call), r(raise).\n >> ')

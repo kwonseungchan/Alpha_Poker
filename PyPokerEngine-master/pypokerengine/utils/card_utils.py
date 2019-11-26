@@ -5,11 +5,6 @@ from pypokerengine.engine.deck import Deck
 from pypokerengine.engine.hand_evaluator import HandEvaluator
 
 def gen_cards(cards_str):
-    #print("AI의 패를 입력함. 첫 번째 situation에서는 0을, 두 번째 situation에서는 1을 쓰자.")
-    #situation = int(input("situation : "))
-    #if situation == 0:
-    #    cards_str[0] = input("cards_str : ")
-    #    cards_str[1] = input("cards_str : ")
     return [Card.from_str(s) for s in cards_str]
 
 def estimate_hole_card_win_rate(nb_simulation, nb_player, hole_card, community_card=None):

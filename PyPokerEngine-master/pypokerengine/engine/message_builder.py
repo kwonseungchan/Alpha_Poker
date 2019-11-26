@@ -1,6 +1,7 @@
 from pypokerengine.engine.data_encoder import DataEncoder
 from pypokerengine.engine.action_checker import ActionChecker
 
+
 class MessageBuilder:
 
   GAME_START_MESSAGE = "game_start_message"

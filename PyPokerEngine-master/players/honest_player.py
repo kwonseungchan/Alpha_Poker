@@ -1,6 +1,8 @@
 from pypokerengine.players import BasePokerPlayer
 from pypokerengine.utils.card_utils import gen_cards, estimate_hole_card_win_rate
 import random as rand
+import time
+from pypokerengine.engine.tts import tts
 
 NB_SIMULATION = 1000
 
@@ -107,6 +109,22 @@ class HonestPlayer(BasePokerPlayer):
                 else : # 98% ~ 100%
                     amount = int (maxAmount * 0.8 + minAmount * 0.2 )
 
+        if action == "fold":
+            quote = ( "인공지능이 폴드를 선언했습니다." )
+            tts.playTts(tts, quote)
+            time.sleep(2)
+        elif action == "call":
+            quote = ( "인공지능이 콜을 선언했습니다." )
+            tts.playTts(tts, quote)
+            time.sleep(2)
+        elif action == "raise":
+            quote = ( "인공지능이" + str(amount) +"만큼 레이즈를 선언했습니다." )
+            tts.playTts(tts, quote)
+            time.sleep(3)
+        else:
+            quote = ( "error" + str(action) )
+            tts.playTts(tts, quote)
+            time.sleep(3)
         return action, amount
 
     def __choice_action(self, valid_actions, win_rate):

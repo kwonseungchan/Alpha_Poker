@@ -9,7 +9,6 @@ from pypokerengine.engine.game_evaluator import GameEvaluator
 from pypokerengine.engine.message_builder import MessageBuilder
 from pypokerengine.engine.card import Card
 from pypokerengine.engine.card_reader import cardReader
-from tkinter import*
 
 
 class RoundManager:
@@ -79,12 +78,10 @@ class RoundManager:
     for player in players:
       holecard = []
       for i in range(2):
-        #str_card = input("str_card :")
         str_card = self.cardList[0][0]
         del self.cardList[0]
         createdCard = Card.from_str(str_card)
         holecard.append(createdCard)
-      #player.add_holecard(deck.draw_cards(2))
       player.add_holecard(holecard)
 
   @classmethod
@@ -114,7 +111,6 @@ class RoundManager:
   @classmethod
   def __flop(self, state):
     for i in range(3):
-      #str_card = input("str_card :")
       str_card = self.cardList[0][0]
       del self.cardList[0]
       createdCard = Card.from_str(str_card)
@@ -123,7 +119,6 @@ class RoundManager:
 
   @classmethod
   def __turn(self, state):
-    #str_card = input("str_card :")
     str_card = self.cardList[0][0]
     del self.cardList[0]
     createdCard = Card.from_str(str_card)
@@ -132,7 +127,6 @@ class RoundManager:
 
   @classmethod
   def __river(self, state):
-    #str_card = input("str_card :")
     str_card = self.cardList[0][0]
     del self.cardList[0]
     createdCard = Card.from_str(str_card)

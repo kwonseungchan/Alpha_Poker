@@ -8,7 +8,6 @@ class cardReader:
     self.cardList = []
 
   def returnCardList(self):
-    #self.clearCard(self)
     self.addCard(self)
 
     f = open('pypokerengine/engine/read_card.csv', 'r')
@@ -21,6 +20,7 @@ class cardReader:
 
   def addCard(self):
     f = open('pypokerengine/engine/read_card.csv', 'w', newline='')
+    #f = open('/read_card.csv', 'w', newline='')
     wr = csv.writer(f)
     for i in range(9):
       print(i)
@@ -28,15 +28,3 @@ class cardReader:
       wr.writerow([newCard])
     
     f.close()
-    
-'''
-  def clearCard(self):
-    f = open('pypokerengine/engine/read_card.csv','r')
-    rdr = csv.reader(f)
-    lines = []
-    for line in rdr:
-      for i in range(9):
-        line[i] = ""
-    lines.append(line)
- 
-'''

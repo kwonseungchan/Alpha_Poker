@@ -1,7 +1,7 @@
 import pypokerengine.utils.visualize_utils as U
 from pypokerengine.players import BasePokerPlayer
-#from players.emulator_player import EmulatorPlayer
-import tkinter as tk
+from pypokerengine.engine.tts import tts
+import time
 
 class ConsolePlayer(BasePokerPlayer):
 
@@ -15,14 +15,20 @@ class ConsolePlayer(BasePokerPlayer):
 
   def receive_game_start_message(self, game_info):
     print(U.visualize_game_start(game_info, self.uuid))
+    quote = "게임이 시작되었습니다."
+    tts.playTts(tts, quote)
     self.__wait_until_input()
 
   def receive_round_start_message(self, round_count, hole_card, seats):
     print(U.visualize_round_start(round_count, hole_card, seats, self.uuid))
+    quote = ( str(round_count) + "라운드가 시작되었습니다." )
+    tts.playTts(tts, quote)
     self.__wait_until_input()
 
   def receive_street_start_message(self, street, round_state):
     print(U.visualize_street_start(street, round_state, self.uuid))
+    quote = ( str(street) + "입니다." )
+    tts.playTts(tts, quote)
     self.__wait_until_input()
 
   def receive_game_update_message(self, new_action, round_state):
@@ -31,32 +37,41 @@ class ConsolePlayer(BasePokerPlayer):
 
   def receive_round_result_message(self, winners, hand_info, round_state):
     print(U.visualize_round_result(winners, hand_info, round_state, self.uuid))
+    quote = ( "receive round result message" )
+    tts.playTts(tts, quote)
     self.__wait_until_input()
 
   def __wait_until_input(self):
-    input("Enter some key to continue ...")
+    time.sleep(3)
+    #input("Enter some key to continue ...")
 
   def __gen_input_wrapper(self):
     return lambda msg: input(msg)
 
   def __receive_action_from_console(self, valid_actions):
-
-    root = tk.Tk()
-    label = tk.Label(root, width=30)
-    label.pack(padx=20, pady=20)
-    label.configure(text="폴드f 콜c 레이즈r")
-    root.after(3000, root.destroy)
-    root.mainloop()
-
+    quote = ( "폴드, 레이즈, 콜 중에 결정해주세요." )
+    tts.playTts(tts, quote)
+    time.sleep(2)
     flg = self.input_receiver('Enter f(fold), c(call), r(raise).\n >> ')
     if flg in self.__gen_valid_flg(valid_actions):
       if flg == 'f':
+        quote = ( "폴드 했습니다." )
+        tts.playTts(tts, quote)
+        time.sleep(2)
         return valid_actions[0]['action'], valid_actions[0]['amount']
       elif flg == 'c':
+        quote = ( "콜 했습니다." )
+        tts.playTts(tts, quote)
+        time.sleep(2)
         return valid_actions[1]['action'], valid_actions[1]['amount']
       elif flg == 'r':
         valid_amounts = valid_actions[2]['amount']
+        quote = ( "얼마를 레이즈 하시겠습니까. ")
+        tts.playTts(tts, quote)
         raise_amount = self.__receive_raise_amount_from_console(valid_amounts['min'], valid_amounts['max'])
+        quote = ( str(raise_amount) + "만큼 레이즈 했습니다." )
+        tts.playTts(tts, quote)
+        time.sleep(3)
         return valid_actions[2]['action'], raise_amount
     else:
       return self.__receive_action_from_console(valid_actions)

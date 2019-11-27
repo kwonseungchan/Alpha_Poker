@@ -118,8 +118,11 @@ class HonestPlayer(BasePokerPlayer):
             tts.playTts(tts, quote)
             time.sleep(2)
         elif action == "raise":
-            quote = ( "인공지능이" + str(amount) +"만큼 레이즈를 선언했습니다." )
-            tts.playTts(tts, quote)
+            if amount == -1:
+                tts.playTts(tts, "인공지능이 폴드를 선언했습니다.")
+            else:
+                quote = ( "인공지능이" + str(amount) +"만큼 레이즈를 선언했습니다." )
+                tts.playTts(tts, quote)
             time.sleep(3)
         else:
             quote = ( "error" + str(action) )

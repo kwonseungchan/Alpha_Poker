@@ -1,3 +1,5 @@
+from pypokerengine.engine.tts import tts
+import time
 DIVIDER = "="*70
 
 def visualize_game_start(game_info, uuid=None):
@@ -94,6 +96,16 @@ def visualize_round_result(winners, hand_info, round_state, uuid=None):
     ls.append(_visualize_sub_title("round state"))
     ls.append(visualize_round_state(round_state))
     ls.append(DIVIDER)
+    for winner in winners:
+        quote = ( str(winner["name"]) + "의 승리입니다." + str(winner["name"]) + "의 스택은" + str(winner["stack"]) + "입니다." )
+        tts.playTts(tts, quote)
+        time.sleep(5)
+    if len(hand_info) != 0:
+        ls.append(_visualize_sub_title("hand info"))
+        for info in hand_info:
+            text_to_speech_hand_info(info, round_state)
+        
+
     return "\n".join(ls)
 
 def visualize_hand_info(info, round_state):
@@ -107,9 +119,18 @@ def visualize_hand_info(info, round_state):
     ls.append(_visualize_sub_item("hole => [%s, %s]" % (hole["high"], hole["low"])))
     return "\n".join(ls)
 
+def text_to_speech_hand_info(info, round_state):
+    uuid = info["uuid"]
+    name = _fetch_player_name(uuid, round_state)
+    hand, hole = info["hand"]["hand"], info["hand"]["hole"]
+    quote = ( str(name) + "의 핸드는" + str(hand["strength"]) + "이고 high는" + str(hand["high"]) + "이고 low는" + str(hand["low"]) + "입니다. 패는" + str(hole) + "입니다." )
+    tts.playTts(tts, quote)
+    time.sleep(8)
+
 def visualize_player(player):
     return "%s (%s) => state : %s, stack : %s" % (
             player["name"], player["uuid"], player["state"], player["stack"])
+
 
 def visualize_round_state(rs):
     ls = []

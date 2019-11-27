@@ -16,6 +16,7 @@ class ConsolePlayer(BasePokerPlayer):
   def receive_game_start_message(self, game_info):
     print(U.visualize_game_start(game_info, self.uuid))
     quote = "게임이 시작되었습니다."
+    ##여기에 게임 정보 받아서 입력
     tts.playTts(tts, quote)
     self.__wait_until_input()
 
@@ -23,6 +24,15 @@ class ConsolePlayer(BasePokerPlayer):
     print(U.visualize_round_start(round_count, hole_card, seats, self.uuid))
     quote = ( str(round_count) + "라운드가 시작되었습니다." )
     tts.playTts(tts, quote)
+    time.sleep(2)
+    if round_count%2 == 1: #홀수라운드
+      tts.playTts(tts, "플레이어가 5만큼 스몰블라인드, 인공지능이 10만큼 빅블라인드입니다.")
+      time.sleep(2)
+    elif round_count%2 == 0: #짝수라운드
+      tts.playTts(tts, "플레이어가 10만큼 빅블라인드, 인공지능이 5만큼 스몰블라인드입니다.")
+      time.sleep(2)
+    else: #에러
+      tts.playTts(tts, "블라인드 정보 음성출력 에러입니다.")
     self.__wait_until_input()
 
   def receive_street_start_message(self, street, round_state):
@@ -37,8 +47,6 @@ class ConsolePlayer(BasePokerPlayer):
 
   def receive_round_result_message(self, winners, hand_info, round_state):
     print(U.visualize_round_result(winners, hand_info, round_state, self.uuid))
-    quote = ( "receive round result message" )
-    tts.playTts(tts, quote)
     self.__wait_until_input()
 
   def __wait_until_input(self):
@@ -67,6 +75,7 @@ class ConsolePlayer(BasePokerPlayer):
       elif flg == 'r':
         valid_amounts = valid_actions[2]['amount']
         quote = ( "얼마를 레이즈 하시겠습니까. ")
+        time.sleep(2)
         tts.playTts(tts, quote)
         raise_amount = self.__receive_raise_amount_from_console(valid_amounts['min'], valid_amounts['max'])
         quote = ( str(raise_amount) + "만큼 레이즈 했습니다." )
@@ -84,6 +93,8 @@ class ConsolePlayer(BasePokerPlayer):
     return flgs
 
   def __receive_raise_amount_from_console(self, min_amount, max_amount):
+    quote = ( str(min_amount) + "에서" + str(max_amount) + "사이에서 레이즈 가능합니다.")
+    tts.playTts(tts, quote)
     raw_amount = self.input_receiver("valid raise range = [%d, %d]" % (min_amount, max_amount))
     try:
       amount = int(raw_amount)

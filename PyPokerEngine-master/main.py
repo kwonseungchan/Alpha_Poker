@@ -9,8 +9,8 @@ import time
 
 
 config = setup_config(max_round=10, initial_stack=100, small_blind_amount=5)
-config.register_player(name="HonestPlayer", algorithm=HonestPlayer())
-config.register_player(name="ConsolePlayer", algorithm=ConsolePlayer())
+config.register_player(name="인공지능", algorithm=HonestPlayer())
+config.register_player(name="플레이어", algorithm=ConsolePlayer())
 #config.register_player(name="EmulatorPlayer", algorithm=EmulatorPlayer())
 #config.register_player(name="FishPlayer", algorithm=FishPlayer())
 game_result = start_poker(config, verbose=1)

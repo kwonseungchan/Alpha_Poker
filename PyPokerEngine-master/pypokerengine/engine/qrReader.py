@@ -6,8 +6,14 @@ import datetime
 import imutils
 import time
 import cv2
+import csv
 
 class qrReader:
+        cardList = []
+
+        def _init__(self):
+            self.cardList = []
+
         def readQR(self):
                 ap = argparse.ArgumentParser()
                 ap.add_argument("-o", "--output", type=str, default="barcodes.csv",
@@ -82,9 +88,11 @@ class qrReader:
                 for i in range(9):
                         self.readQR(self)
 
-                f = open('pypokerengine/engine/barcodes.csv', 'r')
+                f = open('barcodes.csv', 'r')
                 reader = csv.reader(f)
                 for row in reader:
                      self.cardList.append(row)
                 f.close()
+
+                return self.cardList
         

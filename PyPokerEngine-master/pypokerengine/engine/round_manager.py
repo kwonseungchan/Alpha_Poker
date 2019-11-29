@@ -9,6 +9,7 @@ from pypokerengine.engine.game_evaluator import GameEvaluator
 from pypokerengine.engine.message_builder import MessageBuilder
 from pypokerengine.engine.card import Card
 from pypokerengine.engine.card_reader import cardReader
+from pypokerengine.engine.qrReader import qrReader
 
 
 class RoundManager:
@@ -20,7 +21,7 @@ class RoundManager:
 
   @classmethod
   def start_new_round(self, round_count, small_blind_amount, ante_amount, table):
-    self.cardList = cardReader.returnCardList(cardReader)
+    self.cardList = qrReader.returnCardList(qrReader)
 
     _state = self.__gen_initial_state(round_count, small_blind_amount, table)
     state = self.__deep_copy_state(_state)

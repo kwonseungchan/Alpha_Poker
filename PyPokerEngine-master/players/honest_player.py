@@ -8,6 +8,8 @@ NB_SIMULATION = 1000
 
 class HonestPlayer(BasePokerPlayer):
 
+    limit = 0
+
     def declare_action(self, valid_actions, hole_card, round_state):
         community_card = round_state['community_card']
         win_rate = estimate_hole_card_win_rate(
@@ -23,6 +25,7 @@ class HonestPlayer(BasePokerPlayer):
         if action == "raise":
             maxAmount = amount["max"]
             minAmount = amount["min"]
+            self.limit = 37 - maxAmount
             i = rand.random()
 
             if win_rate < 0.8: # 70% ~ 80%
@@ -108,6 +111,9 @@ class HonestPlayer(BasePokerPlayer):
                     amount = int (maxAmount * 0.6 + minAmount * 0.4 )
                 else : # 98% ~ 100%
                     amount = int (maxAmount * 0.8 + minAmount * 0.2 )
+
+        if amount >= self.limit:
+            amount = self.limit
 
         if action == "fold":
             quote = ( "인공지능이 폴드를 선언했습니다." )

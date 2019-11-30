@@ -7,6 +7,12 @@ verify_ssl = true
 
 [packages]
 pygame = "*"
+imutils = "*"
+numpy = "*"
+cv2 = "*"
+opencv = "*"
+opencv-python = "*"
+opencv-contrib-python = "*"
 
 [requires]
 python_version = "3.7"

@@ -7,6 +7,7 @@ import imutils
 import time
 import cv2
 import csv
+from pypokerengine.engine.tts import tts
 
 class qrReader:
         cardList = []
@@ -14,7 +15,7 @@ class qrReader:
         def _init__(self):
             self.cardList = []
 
-        def readQR(self):
+        def readQR(self, num):
                 ap = argparse.ArgumentParser()
                 ap.add_argument("-o", "--output", type=str, default="barcodes.csv",
                         help="path to output CSV file containing barcodes")
@@ -22,9 +23,7 @@ class qrReader:
 
                 print("[INFO] starting video stream...")
                 vs = VideoStream(src=0).start()
-
-                time.sleep(2.0)
-                
+ 
                 csv = open(args["output"], "a")
                 found = set()
 
@@ -63,7 +62,7 @@ class qrReader:
                 cv2.imshow("Barcode Scanner", frame)
                 key = cv2.waitKey(1) & 0xFF
                 
-                cv2.waitKey(3000)
+                cv2.waitKey(2000)
                         
 
                 print("[INFO] cleaning up...")
@@ -71,7 +70,7 @@ class qrReader:
                 cv2.destroyAllWindows()
                 vs.stop()
 
-
+                        
         def csvClean(self):
                 ap = argparse.ArgumentParser()
                 ap.add_argument("-o", "--output", type=str, default="barcodes.csv",
@@ -86,7 +85,15 @@ class qrReader:
                 self.csvClean(self)
 
                 for i in range(9):
-                        self.readQR(self)
+                        quote = ( str(i+1) + "번째 카드를 입력시켜주세요.")
+                        tts.playTts(tts, quote)
+                        time.sleep(2)
+                        check = self.checkCSV(self, i)
+                        while check == 0:
+                            self.readQR(self, i) 
+                            check = self.checkCSV(self, i)
+                            if check == 0:
+                                tts.playTts(tts, "다시 입력시켜주세요.")
 
                 f = open('barcodes.csv', 'r')
                 reader = csv.reader(f)
@@ -95,4 +102,24 @@ class qrReader:
                 f.close()
 
                 return self.cardList
+
+        def checkCSV(self, num):
+                checkList = ["", "", "", "", "", "", "", "", ""]
+                count = 0
+
+                f = open('barcodes.csv', 'r')
+                reader = csv.reader(f)
+                for row in reader:
+                    checkList[count] = row
+                    count += 1
+                f.close
+                    
+                print(checkList)
+
+                if checkList[num] == "":
+                    return 0
+                
+                return 1
+
+
         

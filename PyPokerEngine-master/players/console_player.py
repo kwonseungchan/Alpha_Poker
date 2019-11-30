@@ -27,10 +27,10 @@ class ConsolePlayer(BasePokerPlayer):
     time.sleep(2)
     if round_count%2 == 1: #홀수라운드
       tts.playTts(tts, "플레이어가 5만큼 스몰블라인드, 인공지능이 10만큼 빅블라인드입니다.")
-      time.sleep(2)
+      time.sleep(3)
     elif round_count%2 == 0: #짝수라운드
       tts.playTts(tts, "플레이어가 10만큼 빅블라인드, 인공지능이 5만큼 스몰블라인드입니다.")
-      time.sleep(2)
+      time.sleep(3)
     else: #에러
       tts.playTts(tts, "블라인드 정보 음성출력 에러입니다.")
     self.__wait_until_input()
@@ -74,8 +74,7 @@ class ConsolePlayer(BasePokerPlayer):
         return valid_actions[1]['action'], valid_actions[1]['amount']
       elif flg == 'r':
         valid_amounts = valid_actions[2]['amount']
-        quote = ( "얼마를 레이즈 하시겠습니까. ")
-        time.sleep(2)
+        time.sleep(3)
         tts.playTts(tts, quote)
         raise_amount = self.__receive_raise_amount_from_console(valid_amounts['min'], valid_amounts['max'])
         quote = ( str(raise_amount) + "만큼 레이즈 했습니다." )

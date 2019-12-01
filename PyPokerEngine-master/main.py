@@ -8,7 +8,7 @@ from pypokerengine.engine.tts import tts
 import time
 
 
-config = setup_config(max_round=10, initial_stack=20, small_blind_amount=1)
+config = setup_config(max_round=10, initial_stack=20, small_blind_amount=0)
 config.register_player(name="인공지능", algorithm=HonestPlayer())
 config.register_player(name="플레이어", algorithm=ConsolePlayer())
 #config.register_player(name="EmulatorPlayer", algorithm=EmulatorPlayer())

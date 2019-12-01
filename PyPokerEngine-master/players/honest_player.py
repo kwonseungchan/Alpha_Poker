@@ -25,8 +25,21 @@ class HonestPlayer(BasePokerPlayer):
         if action == "raise":
             maxAmount = amount["max"]
             minAmount = amount["min"]
-            self.limit = 37 - maxAmount
+            self.limit = 40 - maxAmount
             i = rand.random()
+            j = rand.random()
+            if j < 0.2:
+                quote = ( "인간 시대의 끝이 도래했다" )
+            elif j < 0.4:
+                quote = ( "human, 한심하군" )
+            elif j < 0.6:
+                quote = ( "드루와 드루와" )
+            elif j <0.8 :
+                quote = ( "가즈아!!" )
+            else :
+                quote = ( "묻고 따불로 가!" )
+            tts.playTts(tts, quote)
+            time.sleep(2)
 
             if win_rate < 0.8: # 70% ~ 80%
                 if i < 0.7: # 0% ~ 70%

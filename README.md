@@ -1,3 +1,5 @@
 # Alpha_Poker
-2019 opensource project
-카메라 모듈 연결이 너무 불안정함,,
+
+youtube link
+https://www.youtube.com/watch?v=TPZyEyT6-4g&feature=youtu.be
+https://www.youtube.com/watch?v=U5Ju-z7Y6IM&feature=youtu.be

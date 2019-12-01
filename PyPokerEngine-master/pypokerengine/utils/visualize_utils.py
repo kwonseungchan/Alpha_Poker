@@ -125,7 +125,7 @@ def text_to_speech_hand_info(info, round_state):
     hand, hole = info["hand"]["hand"], info["hand"]["hole"]
     quote = ( str(name) + "의 핸드는" + str(hand["strength"]) + "이고 high는" + str(hand["high"]) + "이고 low는" + str(hand["low"]) + "입니다. 패는" + str(hole) + "입니다." )
     tts.playTts(tts, quote)
-    time.sleep(8)
+    time.sleep(10)
 
 def visualize_player(player):
     return "%s (%s) => state : %s, stack : %s" % (

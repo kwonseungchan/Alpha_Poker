@@ -10,7 +10,7 @@ from pypokerengine.engine.message_builder import MessageBuilder
 from pypokerengine.engine.card import Card
 from pypokerengine.engine.card_reader import cardReader
 from pypokerengine.engine.qrReader import qrReader
-from pypokerengine.engine.neo import neo
+from pypokerengine.engine.led import led
 
 
 class RoundManager:
@@ -188,7 +188,7 @@ class RoundManager:
       player.add_action_history(Const.Action.CALL, bet_amount)
       print("@@@@@player : ", player.name, "@@@@@\n")
       print("@@@@@bet_amount : ", bet_amount, "@@@@@\n")
-      neo.neo(neo, player.name, bet_amount)
+      led.led(led, player.name, bet_amount)
     elif action == 'raise':
       self.__chip_transaction(player, bet_amount)
       add_amount = bet_amount - ActionChecker.agree_amount(state["table"].seats.players)
@@ -196,7 +196,7 @@ class RoundManager:
       print("@@@@@player : ", player.name, "@@@@@\n")
       print("@@@@@bet_amount : ", bet_amount, "@@@@@\n") #bet_amount 만큼 칩을 뱉어야 함
       print("@@@@@add_amount : ", add_amount, "@@@@@\n")
-      neo.neo(neo, player.name, bet_amount)
+      led.led(led, player.name, bet_amount)
     elif action == 'fold':
       player.add_action_history(Const.Action.FOLD)
       player.pay_info.update_to_fold()

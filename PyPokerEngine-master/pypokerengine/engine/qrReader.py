@@ -85,9 +85,14 @@ class qrReader:
                 self.csvClean(self)
 
                 for i in range(9):
-                        quote = ( str(i+1) + "번째 카드를 입력시켜주세요.")
+                        if i == 0 or i == 1 :
+                                quote = ("인공지능의 카드를 입력시켜주세요.")
+                        elif i == 2 or i == 3 :
+                                quote = ("플레이어의 카드를 입력시켜주세요.")
+                        else :
+                                quote = ( str(i-3) + "번째 커뮤니티 카드를 입력시켜주세요.")
                         tts.playTts(tts, quote)
-                        time.sleep(2)
+                        time.sleep(4)
                         check = self.checkCSV(self, i)
                         while check == 0:
                             self.readQR(self, i) 

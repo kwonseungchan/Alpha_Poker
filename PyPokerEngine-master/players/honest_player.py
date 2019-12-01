@@ -112,8 +112,8 @@ class HonestPlayer(BasePokerPlayer):
                 else : # 98% ~ 100%
                     amount = int (maxAmount * 0.8 + minAmount * 0.2 )
 
-        if amount >= self.limit:
-            amount = self.limit
+            if amount >= self.limit:
+                amount = self.limit
 
         if action == "fold":
             quote = ( "인공지능이 폴드를 선언했습니다." )

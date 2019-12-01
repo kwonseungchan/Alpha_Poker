@@ -60,19 +60,19 @@ class ConsolePlayer(BasePokerPlayer):
     quote = ( "폴드, 레이즈, 콜 중에 결정해주세요." )
     tts.playTts(tts, quote)
     time.sleep(2)
-    flg = self.input_receiver('Enter f(fold), c(call), r(raise).\n >> ')
+    flg = self.input_receiver('Enter /(fold), *(call), -(raise).\n >> ')
     if flg in self.__gen_valid_flg(valid_actions):
-      if flg == 'f':
+      if flg == '/':
         quote = ( "폴드 했습니다." )
         tts.playTts(tts, quote)
         time.sleep(2)
         return valid_actions[0]['action'], valid_actions[0]['amount']
-      elif flg == 'c':
+      elif flg == '*':
         quote = ( "콜 했습니다." )
         tts.playTts(tts, quote)
         time.sleep(2)
         return valid_actions[1]['action'], valid_actions[1]['amount']
-      elif flg == 'r':
+      elif flg == '-':
         valid_amounts = valid_actions[2]['amount']
         time.sleep(3)
         tts.playTts(tts, quote)
@@ -85,10 +85,10 @@ class ConsolePlayer(BasePokerPlayer):
       return self.__receive_action_from_console(valid_actions)
 
   def __gen_valid_flg(self, valid_actions):
-    flgs = ['f', 'c']
+    flgs = ['/', '*']
     is_raise_possible = valid_actions[2]['amount']['min'] != -1
     if is_raise_possible:
-      flgs.append('r')
+      flgs.append('-')
     return flgs
 
   def __receive_raise_amount_from_console(self, min_amount, max_amount):

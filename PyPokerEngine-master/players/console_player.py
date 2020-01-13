@@ -25,14 +25,6 @@ class ConsolePlayer(BasePokerPlayer):
     quote = ( str(round_count) + "라운드가 시작되었습니다." )
     tts.playTts(tts, quote)
     time.sleep(2)
-    #if round_count%2 == 1: #홀수라운드
-    #  tts.playTts(tts, "플레이어가 1만큼 스몰블라인드, 인공지능이 2만큼 빅블라인드입니다.")
-    #  time.sleep(3)
-    #elif round_count%2 == 0: #짝수라운드
-    #  tts.playTts(tts, "플레이어가 2만큼 빅블라인드, 인공지능이 1만큼 스몰블라인드입니다.")
-    #  time.sleep(3)
-    #else: #에러
-    #  tts.playTts(tts, "블라인드 정보 음성출력 에러입니다.")
     self.__wait_until_input()
 
   def receive_street_start_message(self, street, round_state):
@@ -51,7 +43,6 @@ class ConsolePlayer(BasePokerPlayer):
 
   def __wait_until_input(self):
     time.sleep(3)
-    #input("Enter some key to continue ...")
 
   def __gen_input_wrapper(self):
     return lambda msg: input(msg)

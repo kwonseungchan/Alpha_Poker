@@ -27,17 +27,9 @@ class HonestPlayer(BasePokerPlayer):
             minAmount = amount["min"]
             self.limit = 40 - maxAmount
             i = rand.random()
-            j = rand.random()
-            if j < 0.2:
-                quote = ( "인간 시대의 끝이 도래했다" )
-            elif j < 0.4:
-                quote = ( "human, 한심하군" )
-            elif j < 0.6:
-                quote = ( "드루와 드루와" )
-            elif j <0.8 :
-                quote = ( "가즈아!!" )
-            else :
-                quote = ( "묻고 따불로 가!" )
+            j = rand.randint(0,4)
+            quote_sample = ["인간 시대의 끝이 도래했다", "human, 한심하군", "드루와 드루와", "가즈아!!", "묻고 더블로 가!"]
+            quote = quote_sample[j]
             tts.playTts(tts, quote)
             time.sleep(2)
 
